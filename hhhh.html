@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Editor 3D com NPCs</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" 
+        href="https://tse1.mm.bing.net/th/id/OIP.rECOBKTv1pKRqzTtKCDAqAHaHk?r=0&rs=1&pid=ImgDetMain&o=7&rm=3">
+  <style>
+    body { margin: 0; display: flex; height: 100vh; }
+    #gameArea { flex: 1; background:#111; position:relative; }
+    #editorPanel {
+      width: 300px; background: #222; color: white;
+      padding: 20px; font-family: Arial, sans-serif;
+      display:flex; flex-direction:column;
+    }
+    #editorPanel h2 {
+      margin-top: 0; font-size: 20px;
+      border-bottom: 1px solid #555; padding-bottom: 5px;
+    }
+    .section { margin-bottom: 20px; }
+    label { display: block; margin: 5px 0; }
+    select, button {
+      width: 100%; padding: 8px; margin-top: 5px;
+      border-radius: 5px; border: none;
+    }
+    button { background: #007BFF; color: white; cursor: pointer; }
+    button:hover { background: #0056b3; }
+
+    /* Painel de comentários */
+    #commentsPanel {
+      position:absolute; bottom:10px; left:10px;
+      width:300px; height:200px;
+      background:rgba(0,0,0,0.8); color:white;
+      font-family:Arial,sans-serif; padding:10px;
+      display:none; flex-direction:column;
+    }
+    #commentsPanel h3 { margin:0 0 10px 0; font-size:14px; }
+    #chatMessages { flex:1; overflow-y:auto; font-size:12px; }
+    #chatInput { width:100%; padding:5px; margin-top:5px; }
+  </style>
+</head>
+<body>
+  <!-- Painel lateral -->
+  <div id="editorPanel">
+    <h2>Editor - Gatilhos 1.0</h2>
+    <div class="section">
+      <label for="npcSelect">Escolher NPC:</label>
+      <select id="npcSelect">
+        <option value="npc1">NPC 1 - Guerreiro</option>
+        <option value="npc2">NPC 2 - Mago</option>
+        <option value="npc3">NPC 3 - Arqueiro</option>
+      </select>
+      <button onclick="addNPC()">Adicionar NPC</button>
+    </div>
+    <div class="section">
+      <label for="triggerSelect">Gatilho:</label>
+      <select id="triggerSelect">
+        <option value="gatilho1">Gatilho 1 - Colisão</option>
+        <option value="gatilho2">Gatilho 2 - Área</option>
+        <option value="gatilho3">Gatilho 3 - Tempo</option>
+      </select>
+      <button onclick="addTrigger()">Adicionar Gatilho</button>
+    </div>
+    <div class="section">
+      <button onclick="toggleComments()">Abrir Comentários</button>
+    </div>
+  </div>
+
+  <!-- Área de jogo -->
+  <div id="gameArea">
+    <!-- Painel de comentários dentro do jogo -->
+    <div id="commentsPanel">
+      <h3>Comentários Online</h3>
+      <div id="chatMessages"></div>
+      <input id="chatInput" type="text" placeholder="Digite sua mensagem...">
+      <button onclick="sendComment()">Enviar</button>
+    </div>
+  </div>
+
+  <script>
+    function addNPC(){
+      const npc = document.getElementById('npcSelect').value;
+      alert('NPC adicionado: ' + npc);
+    }
+    function addTrigger(){
+      const trigger = document.getElementById('triggerSelect').value;
+      alert('Gatilho adicionado: ' + trigger);
+    }
+    function toggleComments(){
+      const panel = document.getElementById('commentsPanel');
+      panel.style.display = (panel.style.display==='none' || panel.style.display==='') ? 'flex' : 'none';
+    }
+    function sendComment(){
+      const input = document.getElementById('chatInput');
+      const msg = input.value.trim();
+      if(msg){
+        const chatMessages = document.getElementById('chatMessages');
+        const div = document.createElement('div');
+        div.textContent = 'Evento: ' + msg;
+        chatMessages.appendChild(div);
+        input.value='';
+      }
+    }
+  </script>
+</body>
+</html>
